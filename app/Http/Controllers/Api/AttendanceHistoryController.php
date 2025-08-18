@@ -288,7 +288,7 @@ class AttendanceHistoryController extends Controller
     }
 
     /**
-     * Format attendance data for response
+     * Format attendance data for response - FIXED VERSION
      */
     private function formatAttendanceData($attendance, $includeDetails = false)
     {
@@ -296,8 +296,9 @@ class AttendanceHistoryController extends Controller
             'id' => $attendance->id,
             'date' => $attendance->date->format('Y-m-d'),
             'day_name' => $attendance->date->format('l'),
-            'clock_in' => $attendance->clock_in ? $attendance->clock_in->format('H:i') : null,
-            'clock_out' => $attendance->clock_out ? $attendance->clock_out->format('H:i') : null,
+            // FIX: Handle time fields as strings, not Carbon instances
+            'clock_in' => $attendance->clock_in ? Carbon::parse($attendance->clock_in)->format('H:i') : null,
+            'clock_out' => $attendance->clock_out ? Carbon::parse($attendance->clock_out)->format('H:i') : null,
             'status' => $attendance->status,
             'status_label' => $this->getStatusLabel($attendance->status),
             'work_duration_minutes' => $attendance->work_duration ?? 0,

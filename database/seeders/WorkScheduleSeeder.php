@@ -8,40 +8,53 @@ use App\Models\WorkSchedule;
 
 class WorkScheduleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-   public function run()
+    public function run(): void
     {
         $schedules = [
             [
-                'name' => 'Regular Schedule',
+                'name' => 'Regular Schedule (Mon-Fri)',
                 'start_time' => '08:00:00',
                 'end_time' => '17:00:00',
-                'work_days' => json_encode([1,2,3,4,5]), // Mon-Fri
+                'work_days' => [1, 2, 3, 4, 5], // Monday to Friday
                 'total_hours' => 8,
                 'break_duration' => 60,
-                'is_flexible' => false
+                'is_flexible' => false,
+                'flexible_minutes' => 0,
+                'is_active' => true,
             ],
             [
-                'name' => 'Flexible Schedule',
-                'start_time' => '09:00:00',
-                'end_time' => '18:00:00',
-                'work_days' => json_encode([1,2,3,4,5]),
+                'name' => 'Flexible Schedule (Mon-Fri)',
+                'start_time' => '08:00:00',
+                'end_time' => '17:00:00',
+                'work_days' => [1, 2, 3, 4, 5], // Monday to Friday
                 'total_hours' => 8,
                 'break_duration' => 60,
                 'is_flexible' => true,
-                'flexible_minutes' => 60
+                'flexible_minutes' => 15, // 15 minutes tolerance
+                'is_active' => true,
             ],
             [
-                'name' => 'Shift Schedule',
-                'start_time' => '13:00:00',
-                'end_time' => '22:00:00',
-                'work_days' => json_encode([1,2,3,4,5,6]),
+                'name' => 'Shift Schedule (Mon-Sat)',
+                'start_time' => '09:00:00',
+                'end_time' => '18:00:00',
+                'work_days' => [1, 2, 3, 4, 5, 6], // Monday to Saturday
                 'total_hours' => 8,
                 'break_duration' => 60,
-                'is_flexible' => false
-            ]
+                'is_flexible' => true,
+                'flexible_minutes' => 30,
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Part-time Schedule',
+                'start_time' => '13:00:00',
+                'end_time' => '17:00:00',
+                'work_days' => [1, 2, 3, 4, 5], // Monday to Friday
+                'total_hours' => 4,
+                'break_duration' => 0,
+                'is_flexible' => false,
+                'flexible_minutes' => 0,
+                'is_active' => true,
+            ],
         ];
 
         foreach ($schedules as $schedule) {
