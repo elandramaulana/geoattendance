@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Models\OvertimeRequest;
 
 class AttendanceController extends Controller
 {

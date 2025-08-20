@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\AttendanceHistoryController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\OvertimeRequestController;
 use App\Http\Controllers\Api\OvertimeApprovalController;
+use App\Http\Controllers\Api\VisitController;
+use App\Http\Controllers\Api\VisitApprovalController;
 
 // Public routes
 Route::prefix('auth')->group(function () {
@@ -53,5 +55,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{id}/approve', [OvertimeApprovalController::class, 'approve']); // Approve request
         Route::put('/{id}/reject', [OvertimeApprovalController::class, 'reject']); // Reject request
     });
+
+    Route::prefix('employee/visits')->group(function () {
+        Route::post('request', [VisitController::class, 'requestVisit']);
+        Route::post('{visitId}/start', [VisitController::class, 'startVisit']);
+        Route::post('{visitId}/end', [VisitController::class, 'endVisit']);
+        Route::get('my-visits', [VisitController::class, 'getMyVisits']);
+    });
+
+    Route::prefix('approval/visits')->group(function () {
+        Route::post('{visitId}/approve', [VisitApprovalController::class, 'approveVisit']);
+        Route::get('for-approval', [VisitApprovalController::class, 'getVisitsForApproval']);
+        Route::get('statistics', [VisitApprovalController::class, 'getVisitStatistics']);
+        Route::get('{visitId}/detail', [VisitApprovalController::class, 'getVisitDetail']);
+    });
+
 });
 
